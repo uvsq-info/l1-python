@@ -1,0 +1,27 @@
+Fichier d'aide pour le cours sur Git, à destination des enseignants:
+
+Slide 3-4: Git est certes décentralisé et peut s'utiliser sans serveur dédié. Par simplicité, le serveur (GitHub) sert de point de rencontre, d'où le slide 4 où le dessin semble être le dessin d'un système P2P.
+
+
+Slide 7: décrire les fichiers /dossiers dans un ordi, avec le chemin complet, répertoire courant,...
+
+Slide 8: pour ceux qui veulent, parler de SSH (dire que c'est juste un autre protocole de communication que HTTP,...). Le .git est un dossier caché, qu'on peut voir avec ls -a.
+C'est dans le .git qu'il y a l'hitorique. C'est dans les fichiers qu'il y a la version la plus à jour.
+
+Slide 11: Le format d'un log:
+On remarque: un code hexa -> unique par commit (utile pour reverse)
+l'auteur du commit
+l'heure et date du commit
+le message dudit commit
+quel(s) fichiers ont été modifiés par le commit, et comment nombre d'insertions/ suppressions.
+
+Slide 12: le HEAD^, ou bien HEAD^^ permet de supprimer les deux derniers commit et de revenir à l'avant avant dernier (on peut en parler, mais ca risque de les perturber d'apprendre la syntaxe complexe, je me suis donc restreint à "j'annule le dernier commit et je reviens à l'avant dernier")
+
+Slide 13: s'il y a des conflits, Git indique dans les fichiers où ca pose problème, et seulement où ca pose problème. Ca donne des info précises. Dire que ca va être le coeur du TD.
+
+Slide 17: oui checkout sert pour deux choses: revenir au dernier commit, ou changer de branche.
+
+Slide 19: On n'aura probablement pas ce problème en python, mais on peut parler du fait que si on aura un langage compilé (C), on ne met pas les .o (idem quand on fait du latex), et on ne met que le code source.
+
+
+

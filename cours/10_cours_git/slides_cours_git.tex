@@ -1,0 +1,417 @@
+\documentclass[presentation]{beamer}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{color,float,epsf,caption,subcaption}
+\usepackage{pslatex}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{dsfont}
+\usepackage{mathrsfs}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{appendix}
+\usepackage{multicol}
+\usepackage{pifont}
+\usepackage{bbding}
+\usepackage{listings}
+\lstloadlanguages{bash}
+
+
+\usetheme{default}
+\usecolortheme{dolphin}
+\usefonttheme{structuresmallcapsserif}
+\beamertemplatenavigationsymbolsempty
+
+\defbeamertemplate{footline}{centered page number}
+{%
+	\vspace*{-1cm}
+  \hspace*{\fill}%
+  \usebeamercolor[fg]{page number in head/foot}%
+  \usebeamerfont{page number in head/foot}%
+  \insertframenumber\,/\,\inserttotalframenumber%
+  \hspace*{\fill}\vskip2pt%
+}
+
+
+\definecolor{vertFonce}{RGB}{8,112,33}
+\definecolor{turquoise}{rgb}{0.3450, 0.63137, 0.5372}
+\definecolor{bleuClair}{rgb}{0.29803, 0.63137, 0.67843}
+\definecolor{gris}{rgb}{0.5470, 0.57058, 0.60588}
+\definecolor{rouge}{rgb}{0.64313, 0.14117, 0.11764}
+\definecolor{yelow}{rgb}{0.976470, 0.898039 , 0.392156863}
+\definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
+\definecolor{bostonuniversityred}{rgb}{0.8, 0.0, 0.0}
+\definecolor{ao}{rgb}{0.0, 0.5, 0.0}
+
+\newcommand{\valid}{\textcolor{ao}{\Checkmark}}
+\newcommand{\unvalid}{\textcolor{bostonuniversityred}{\XSolidBrush}}
+
+\title{Git}
+\subtitle{Logiciel de Gestion de Versions}
+\author{Yann Rotella}
+\institute{IN100, Université de Versailles Saint Quentin en Yvelines}
+\date{Décembre 2020}
+
+
+
+\titlegraphic{
+\includegraphics[height=2.5cm]{logo_uvsq}
+%\qquad
+%\includegraphics[height=1.7cm]{figures/inria}
+}
+
+\begin{document}
+\lstset{language=bash}
+\lstset{basicstyle=\tt\bfseries\color{green},backgroundcolor=\color{black}}
+\begin{frame}[noframenumbering]
+\titlepage
+\end{frame}
+\setbeamertemplate{footline}[centered page number]
+
+\begin{frame}{Travailler en groupe}
+On veut éviter les problèmes suivant:
+\begin{itemize}
+	\item Modifications simultanées;
+	\item Bugs: "hier \c ca marchait, maintenant j'ai des bugs partout";
+	\item Travailler hors connexion ou avec une mauvaise connexion.
+\end{itemize}
+\pause
+Une bonne solution:
+\begin{center}
+	\textbf{Un logiciel de gestion de versions}
+\end{center}
+\end{frame}
+
+\begin{frame}{Qu'est ce que \c ca fait ?}
+\begin{itemize}
+	\item On garde en mémoire \textcolor{red}{\textbf{toutes}} les anciennes versions (historique).
+	\item \textcolor{red}{\textbf{Qui}} a modifié \textcolor{red}{\textbf{quoi}} et \textcolor{red}{\textbf{pourquoi}} ?
+	\item Possibilité de \textcolor{red}{\textbf{fusionner}} intelligemment un travail simultané.
+\end{itemize}
+\pause
+\hspace{1cm}
+\begin{center}
+	On utilisera donc \textcolor{blue}{Git} pour \textcolor{blue}{travailler à plusieurs} et/ou \textcolor{blue}{un projet long}.
+\end{center}
+\end{frame}
+
+\begin{frame}{Choix du logiciel de gestion de versions}
+\begin{multicols}{2}
+
+\textbf{Centralisé} (SVN):
+\begin{itemize}
+	\item Un serveur conserve tout et chaque utilisateur s'y connecte.
+\end{itemize}
+
+\textbf{Décentralisé} (Mercurial, \textcolor{blue}{Git}):
+\begin{itemize}
+	\item Chacun possède l'historique
+	\item Fonctionnement pair à pair
+\end{itemize}
+
+\begin{figure}%
+\begin{tikzpicture}
+	\node at (0,0) {\includegraphics[height = 1.4cm]{server_free_of_rights}};
+	\draw[thick,<->,>=latex] (-1,1.5) -- (-.5,.5);
+	\draw[thick,<->,>=latex] (-1.5,-1) -- (-.5,-.5);
+	\draw[thick,<->,>=latex] (1.2,1.5) -- (.4,.6);
+	\draw[thick,<->,>=latex] (2,1.5) -- (.5,.6);
+\end{tikzpicture}
+\end{figure}
+
+\begin{figure}%
+\begin{tikzpicture}[scale=.7]
+	\draw[thick,<->,>=latex] (0,0) -- (-1,2);
+	\draw[thick,<->,>=latex] (0,0) -- (3,1);
+	\draw[thick,<->,>=latex] (0,0) -- (2,2.5);
+	\draw[thick,<->,>=latex] (3,1) -- (2,2.5);
+	\draw[thick,<->,>=latex] (2,2.5) -- (3,3.5);
+\end{tikzpicture}
+\end{figure}
+
+\end{multicols}
+\end{frame}
+
+\begin{frame}{Choix du logiciel de gestion de versions}
+\begin{multicols}{2}
+\begin{figure}%
+\begin{tikzpicture}[scale=1.2]
+	\node at (0,0) {\includegraphics[height = 1.4cm]{server_free_of_rights}};
+	\draw[thick,<->,>=latex] (-1,1.5) -- (-.5,.5);
+	\draw[thick,<->,>=latex] (-1.5,-1) -- (-.5,-.5);
+	\draw[thick,<->,>=latex] (1.2,1.5) -- (.4,.6);
+	\draw[thick,<->,>=latex] (2,1.5) -- (.5,.6);
+	\node[below] at (0,-.6) {GitHub};
+\end{tikzpicture}
+\end{figure}
+\begin{itemize}
+\item[\valid] Rapide
+\item[\valid] Branches (plus tard)
+\item[\unvalid] Un peu complexe
+\item[\unvalid] Pas d'interface graphique
+\item[\valid \valid] GitHub
+\item[\valid \valid] Grande communauté
+\end{itemize}
+\end{multicols}
+\end{frame}
+
+\begin{frame}[fragile]{Installation de Git}
+Normalement déjà fait pour récupérer les TD et le cours
+\begin{itemize}
+	\item \textbf{Linux}:
+	\begin{lstlisting}
+$ sudo apt-get install git-core gitk 
+\end{lstlisting}
+	\item \textbf{Windows}: msysgit.github.io
+	\item \textbf{MAC OS}: git-osx-installer (par exemple)
+\end{itemize}
+\pause
+\begin{center}
+	Dans tous les cas, on utilisera la console. C'est l'occasion de se familiariser avec le bash !
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Configuration}
+\begin{lstlisting}
+$ git config --global color.diff auto
+$ git config --global color.status auto
+$ git config --global color.branch auto
+$ git config --global user.name "mon_pseudo"
+$ git config --global user.email my_email
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Naviguer dans le terminal}
+\begin{lstlisting}
+$ cd
+$ ls
+$ ls -a
+$ mkdir
+$ cd ..
+$ git init
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Cloner un dépôt Git}
+Dans le dossier où on veut travailler:
+\begin{lstlisting}
+$ git clone https://github.com/depot_git
+\end{lstlisting}
+Cette solution demandera le nom d'utilisateur/ mot de passe à chaque fois.
+\pause
+
+\textbf{Utiliser SSH (avancé):}
+\begin{lstlisting}
+$ git clone git@github.com:depot_git
+\end{lstlisting}
+Cette solution nécessite de créer des clefs SSH (RSA).
+\begin{figure}%
+\begin{tikzpicture}
+	\node at (0,0) {\includegraphics[height=2cm]{folder_free_of_rights}};
+	\node at (0,-1.2) {.git};
+	\node at (4,0) {\includegraphics[height=2cm]{fichier_free_of_rights}};
+	\node at (4,-1.2) {fichier1.py};
+	\node at (8,0) {\includegraphics[height=2cm]{fichier_free_of_rights}};
+	\node at (8,-1.2) {fichier2.py};
+\end{tikzpicture}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Les informations du dépôt}
+Connaître les fichiers modifiés:
+\begin{lstlisting}
+$ git status
+\end{lstlisting}
+Connaître les modifications du ou des fichiers:
+\begin{lstlisting}
+$ git diff nom_fichier
+$ git diff
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]{Les commits}
+\begin{itemize}
+\item Les commits servent à modifier les fichiers au sein du dépôt git, afin de garder l'historique.
+\end{itemize}
+\begin{lstlisting}
+$ git add fichier1.py fichier2.py
+$ git commit -a -m 'mon message'
+$ git commit fichier1.py -m 'mom message'
+\end{lstlisting}
+
+\pause
+\begin{itemize}
+\item Les commits modifient \textbf{\textcolor{blue}{localement}} le dépôt.
+\end{itemize}
+\begin{figure}%
+\begin{tikzpicture}
+	\node at (2,0) {\includegraphics[height=2cm]{pc_free_of_rights}};
+	\node at (6,2) {\includegraphics[height=2cm]{server_free_of_rights}};
+	\draw[<->,thick,>=latex] (3.1,.5) -- node {\textcolor{red}{\XSolid}} (5.1,1.5);
+	\node at (6,0.5) {Serveur};
+	\node at (0,0) {\includegraphics[height=1cm]{fichier_free_of_rights}};
+	\node at (0,1.5) {\includegraphics[height=1cm]{fichier_free_of_rights}};
+	\draw[->,very thick,blue] (0,1.2) -- (0,.3);
+	\draw (0,0.75) node[left] {\texttt{git commit}};
+\end{tikzpicture}
+\end{figure}
+\end{frame}
+\begin{frame}[fragile]{Naviguer dans l'historique}
+\begin{lstlisting}
+$ git log
+$ git log --stat
+$ git log -p
+\end{lstlisting}
+
+À quoi ressemblent les log (stat exemple)
+\pause
+\begin{lstlisting}
+commit cd7c6ddbf84d02a8e2ae6c47f9c10665de977ee9
+Author: Yann Rotella <yann.rotella@uvsq.fr>
+Date:   Sun Oct 25 19:07:56 2020 +0100
+
+    mon message
+
+ presentations/fichier.py | 31 +++++++++---
+ 1 file changed, 23 insertions(+), 
+ 8 deletions(-)
+\end{lstlisting}
+
+\pause
+\textcolor{blue}{\textbf{Flèches directionnelles + PageUp / PageDown}}
+\end{frame}
+
+\begin{frame}[fragile]{Annuler les bêtises}
+\begin{itemize}
+	\item Annuler le dernier commit, mais ne modifie pas le fichier (soft):
+\begin{lstlisting}
+$ git reset HEAD^
+\end{lstlisting}
+\item Annuler et effacer les modifications (hard):
+\begin{lstlisting}
+$ git reset --hard HEAD^
+\end{lstlisting}
+\item Revenir au dernier commit:
+\begin{lstlisting}
+$ git checkout
+\end{lstlisting}
+\item Annuler le \texttt{git add}:
+\begin{lstlisting}
+$ git reset HEAD -- fichier_a_supprimer
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Travailler avec les autres}
+\begin{multicols}{2}
+\begin{lstlisting}
+$ git pull
+\end{lstlisting}
+\begin{figure}%
+\begin{tikzpicture}
+	\node at (0,0) {\includegraphics[height=2cm]{pc_free_of_rights}};
+	\node at (0,4) {\includegraphics[height=2cm]{server_free_of_rights}};
+	\draw[->,very thick] (0,2.8) -- (0,1.1);
+\end{tikzpicture}
+\end{figure}
+\begin{itemize}
+	\item[1]<2-3> Pas de changement depuis la dernière fois: aucun soucis (Fast-Forward).
+	\item[2]<3> Vous avez fait des commits: les changements sont fusionnés intelligemment ou \textbf{il y a des conflits}, indiqués par <<<<<<< (cf TD)
+\end{itemize}
+\end{multicols}
+\end{frame}
+
+\begin{frame}[fragile]{Travailler avec les autres}
+\begin{multicols}{2}
+\begin{lstlisting}
+$ git push
+\end{lstlisting}
+\begin{figure}%
+\begin{tikzpicture}
+	\node at (0,0) {\includegraphics[height=2cm]{pc_free_of_rights}};
+	\node at (0,4) {\includegraphics[height=2cm]{server_free_of_rights}};
+	\draw[<-,very thick] (0,2.8) -- (0,1.1);
+\end{tikzpicture}
+\end{figure}
+\begin{itemize}
+	\item[1]<2-3> Toujours de type Fast-Forward
+	\item[2]<3> Personne ne doit avoir fait push, \textbf{\textcolor{blue}{on doit donc toujours pull avant de push}}
+\end{itemize}
+\end{multicols}
+\end{frame}
+
+\begin{frame}[fragile]{Annuler les commits qui ont été push}
+\begin{itemize}
+\item[1] Récupérer l'Identifiant du commit:
+\begin{lstlisting}
+$ git log
+\end{lstlisting}
+\item[2] Annuler le commit:
+\begin{lstlisting}
+$ git revert ID
+\end{lstlisting}
+\end{itemize}
+pour l'Identifiant, il suffit de taper les 5-6 premiers caractères, et assurer l'unicité sur l'ensemble des commits.
+\end{frame}
+
+\begin{frame}[fragile]{Les branches (Git avancé)}
+	On utilise les branches pour des sous-projets qui vont être longs.
+	\begin{figure}%
+	\begin{tikzpicture}
+		\draw[fill = green] (0,0) rectangle node {\huge{branche1}} (5,1);
+		\draw[fill = green] (5,-.2) -- (5.8,.5) -- (5,1.2) -- (5,-.2);
+		
+		\draw[fill = red] (-3,3) rectangle node {\huge{master}} (7,4);
+		\draw[fill = red] (7,2.8) -- (7.8,3.5) -- (7,4.2) -- (7,2.8);
+		
+		\draw[->,very thick,blue,>=latex] (0,3.5) -- node[left] {\texttt{\bfseries{git branch}}} (0,.5);
+		\draw[<-,very thick,blue,>=latex] (5,3.5) -- node[left] {\texttt{\bfseries{git merge}}} (5,.5);
+	\end{tikzpicture}
+	\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Les branches (Git avancé)}
+\begin{itemize}
+\item Créer la branche:
+\begin{lstlisting}
+$ git branch nom_branche
+\end{lstlisting}
+\item Travailler sur la branche:
+\begin{lstlisting}
+$ git checkout nom_branche
+\end{lstlisting}
+\item Fusionner la branche avec master:
+\begin{lstlisting}
+$ git merge nom_branche
+\end{lstlisting}
+\item Supprimer la branche:
+\begin{lstlisting}
+$ git branch -d nom_branch
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Autres}
+Si on veut pull en urgence, stash permet de sauvegarder les modifications locales non-commitées.
+\begin{lstlisting}
+$ git stash
+\end{lstlisting}
+\pause
+Très avancé: la gestion des branches vues précédemment peut devenir complexe, mais permet de couper un très gros projet en plein de branches, et d'intégrer les branches seulement quand le code est stable.
+\end{frame}
+
+\begin{frame}{Les bonnes pratiques}
+\begin{itemize}
+	\item<1-4> On commit fréquemment, mais uniquement du code qui \textbf{fonctionnne}.
+	\item<2-4> On teste donc son code \textbf{avant} de commit.
+	\item<3-4> On push rarement (à la fin de la journée / demi-journée de travail).
+	\item<4> \textbf{On utilise Git !}
+\end{itemize}
+	
+\end{frame}
+
+\end{document}
