@@ -1,7 +1,2 @@
-msg = ""
-print()
- ```python
-    msg = "hello world"
-    print(msg.capitalize())
-    ```
-    
+msg = "hello world"
+print(msg.capitalize())
