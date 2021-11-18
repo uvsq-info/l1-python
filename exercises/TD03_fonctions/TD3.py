@@ -10,7 +10,12 @@ print(tempsEnSeconde(mon_temps))
 
 def secondeEnTemps(seconde):
     """Renvoie le temps (jour, heure, minute, seconde) qui correspond au nombre de seconde passé en argument"""
-    pass
+    jours = seconde%3600*24
+    heures = 
+    minutes =
+    secondes =
+
+
     
 temps = secondeEnTemps(100000)
 print(temps[0],"jours",temps[1],"heures",temps[2],"minutes",temps[3],"secondes")
