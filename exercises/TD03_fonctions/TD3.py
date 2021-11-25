@@ -32,7 +32,7 @@ def affichePluriel(mot, nombre):
         print(nombre, mot +  "s", end=" ")
 
 def afficheTemps(temps):
-    affichePluriel("jouer", temps[0])
+    affichePluriel("jour", temps[0])
     affichePluriel("heure", temps[1])
     affichePluriel("minute", temps[2])
     affichePluriel("seconde", temps[3])
@@ -41,11 +41,9 @@ def afficheTemps(temps):
 afficheTemps((1,0,14,23))    
 
 def demandeTemps():
-    if jours= int(input("nombre de jours?"))>= 365:
-        print()
+    jours= int(input("nombre de jours?"))
     heures= int(input("nombre d'heures?"))
     minutes= int(input("nombre de minutes"))
     secondes= int(input("nombre de secondes?"))
-    
-    print(jours , heures , minutes , secondes )
+while heures>=80:
 afficheTemps(demandeTemps())
