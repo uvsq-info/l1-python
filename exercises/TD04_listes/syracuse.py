@@ -66,3 +66,4 @@ altitude_max = max(list_alt)
 print("L'entier", list_alt.index(altitude_max) + 1,
       "a la plus grande altitude maximale égale à",
       altitude_max)
+      
