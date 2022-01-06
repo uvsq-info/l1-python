@@ -30,12 +30,12 @@ def undo():
     if len(objet) == 0:
         return
 
-    identification_objet= objets[-1]
+    identification_objet= objet[-1]
     type = canvas.type(identification_objet)
-    if type == "line"
+    if type == "line":
         canvas.delete(identification_objet)
-        del objets[-1]
-        
+        del objet[-1]
+
     identifiant_objet =objet[-1]
     canvas.delete(identifiant_objet)
     del objet[-1]
