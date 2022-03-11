@@ -9,8 +9,8 @@ def nb_lignes(nom_fichier):
     return cpt
 
 def ecrit_liste_mots(n):
-    fic_in = open("word.txt" , "r")
-    fic_out = open("word" + str(n)+ ".txt", "w")
+    fic_in = open("words.txt" , "r")
+    fic_out = open("words" + str(n)+ ".txt", "w")
     for ligne in fic_in:
         if len(ligne) == n+1:
             fic_out.write(ligne)
