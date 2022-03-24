@@ -5,7 +5,7 @@ import tkinter as tk
 
 LARGEUR = 600
 HAUTEUR = 400
-
+CPT = 0
 
 ###################
 # Fonctions
@@ -13,62 +13,40 @@ HAUTEUR = 400
 def creer_balle():
     """Dessine un disque bleu et retourne son identifiant
      et les valeurs de déplacements dans une liste"""
-    global zone1,zone2,zone3,zone4,compteur_rebonds
-    x, y = LARGEUR // 2, HAUTEUR // 2
+    global cercle
     dx, dy = 3, 5
-    rayon = 20
-    compteur_rebonds = 0
-    zone1 = 0,LARGEUR/2,0,HAUTEUR/2
-    zone2 = LARGEUR/2,LARGEUR,0,HAUTEUR/2
-    zone3 = 0,LARGEUR/2,HAUTEUR/2,HAUTEUR
-    zone4 = LARGEUR/2,LARGEUR,HAUTEUR/2,HAUTEUR
-    canvas.create_rectangle(zone1[0],zone1[2],zone1[1],zone1[3],fill='red')
-    canvas.create_rectangle(zone2[0],zone2[2],zone2[1],zone2[3],fill='green')
-    canvas.create_rectangle(zone3[0],zone3[2],zone3[1],zone3[3],fill='blue')
-    canvas.create_rectangle(zone4[0],zone4[2],zone4[1],zone4[3],fill='yellow')
-    cercle = canvas.create_oval((x-rayon, y-rayon),
-                                (x+rayon, y+rayon),
-                                fill="blue")
     return [cercle, dx, dy]
 
 
 def mouvement():
     """Déplace la balle et ré-appelle la fonction avec un compte-à-rebours"""
-    global id_after
-    rebond()
-    canvas.move(balle[0], balle[1], balle[2])
-    id_after = canvas.after(20, mouvement)
+    global CPT
+    if CPT < 30:
+        rebond()
+        canvas.move(balle[0], balle[1], balle[2])
+        canvas.after(20, mouvement)
 
 
 def rebond():
-    """Fait rebondir la balle sur les bords du canevas,
-    contient aussi l'appel d'une fonction de gestion de zone"""
-    global balle, centre_balle,compteur_rebonds,id_after
-    if compteur_rebonds < 5 :
-        x0, y0, x1, y1 = canvas.coords(balle[0])
-        centre_balle = (x0+x1)/2, (y0+y1)/2
-        zone_manager(centre_balle)
-        if x0 <= 0 or x1 >= 600:
-            balle[1] = -balle[1]
-            compteur_rebonds+=1
-        if y0 <= 0 or y1 >= 400:
-            balle[2] = -balle[2]
-            compteur_rebonds+=1
-    else:
-        balle[1], balle[2] = 0, 0
-        canvas.after_cancel(id_after)
-
-def zone_manager(centre_balle:tuple):
-    global balle,zone1,zone2,zone3,zone4
-    if zone1[0] < centre_balle[0] < zone1[1] and zone1[2] < centre_balle[1] < zone1[3]:
-        canvas.itemconfigure(balle[0],fill='red')
-    elif zone2[0] < centre_balle[0] < zone2[1] and zone2[2] < centre_balle[1] < zone2[3]:
-        canvas.itemconfigure(balle[0],fill='green')
-    elif zone3[0] < centre_balle[0] < zone3[1] and zone3[2] < centre_balle[1] < zone3[3]:
-        canvas.itemconfigure(balle[0],fill='blue')
-    elif zone4[0] < centre_balle[0] < zone4[1] and zone4[2] < centre_balle[1] < zone4[3]:
-        canvas.itemconfigure(balle[0],fill='yellow')
-
+    """Fait rebondir la balle sur les bords du canevas"""
+    global balle, CPT, cercle
+    x0, y0, x1, y1 = canvas.coords(balle[0])
+    if x0 <= 0 or x1 >= 600:
+        balle[1] = -balle[1]
+        CPT += 1
+    if y0 <= 0 or y1 >= 400:
+        balle[2] = -balle[2]
+        CPT += 1
+    if x1 <= 150 and x0 >= 0 and y1 <= 50:
+        canvas.itemconfig(cercle, fill="red")
+    if x1 <= 300 and x0 >= 150 and y1 <= 50:
+        canvas.itemconfig(cercle, fill="green")
+    if x1 <= 450 and x0 >= 300 and y1 <= 50:
+        canvas.itemconfig(cercle, fill="blue")
+    if x1 <= 600 and x0 >= 450 and y1 <= 50:
+        canvas.itemconfig(cercle, fill="yellow")
+    if y1 >= 400:
+        canvas.itemconfig(cercle, fill="white")
 
 ######################
 # programme principal
@@ -78,11 +56,19 @@ racine = tk.Tk()
 canvas = tk.Canvas(racine, bg="black", width=LARGEUR, height=HAUTEUR)
 canvas.grid()
 
+x, y = LARGEUR // 2, HAUTEUR // 2
+rayon = 20
+cercle = canvas.create_oval((x-rayon, y-rayon),
+                                (x+rayon, y+rayon),
+                                fill="blue")
+
+canvas.create_rectangle(0, 0, 150, 50, fill="red")
+canvas.create_rectangle(150, 0, 300, 50, fill="green")
+canvas.create_rectangle(300, 0, 450, 50, fill="blue")
+canvas.create_rectangle(450, 0, 600, 50, fill="yellow")
 # initialisation de la balle
 balle = creer_balle()
-
 # déplacement de la balle
 mouvement()
-
 # boucle principale
 racine.mainloop()
