@@ -38,7 +38,7 @@ def creer_balle():
 
 def mouvement():
     """Déplace la balle et ré-appelle la fonction avec un compte-à-rebours"""
-    couleur =
+    couleur = canvas.itemcget()
     if couleur == "red":
          canvas.itemconfig(balle[0], fill="white")
     elif couleur == "white":
