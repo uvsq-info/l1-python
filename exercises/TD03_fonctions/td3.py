@@ -9,16 +9,13 @@ def tempsEnSeconde(temps):
     pass
 
 def secondeEnTemps(seconde):
-    joursd = seconde / (24*60*60)
-    jours = int(joursd)
-    reste1 = joursd - jours
-    heuresd = reste1 * 24
-    heures = int(heuresd)
-    reste2 = heuresd - heures
-    minutesd = reste2 * 60
-    minutes = int(minutesd)
-    secondes = seconde % 60
-    return(jours, heures, minutes, secondes)
+    jours = seconde // (24*60*60)
+    seconde = seconde % (24*60*60)
+    heures = seconde // (60*60)
+    seconde = seconde % (60*60)
+    minutes = seconde // (60)
+    seconde = seconde % 60
+    return(jours, heures, minutes, seconde)
     pass
 
 
