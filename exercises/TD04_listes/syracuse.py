@@ -12,13 +12,25 @@ def syracuse(n):
 print(syracuse(3))
 
 def testeConjecture(n_max):
-    for i in range (2,n_max):
+    for i in range (1,n_max+1):
         syracuse(i)
     return True
 print(testeConjecture(10000))
 
 def tempsVol(n):
-    vol = len(syracuse(n))-1
-    return(vol)
+    return (len(syracuse(n))-1)
 
 print("Le temps de vol de", 3, "est", tempsVol(3))
+
+
+
+def tempsVolListe(n_max):
+    liste_temps_vol = [tempsVol(i) for i in range(1,n_max +1)]
+    return (liste_temps_vol)
+
+print(tempsVolListe(100))
+
+
+
+l =tempsVolListe(10000)
+print(max(l), l.index(max(l))+1)
