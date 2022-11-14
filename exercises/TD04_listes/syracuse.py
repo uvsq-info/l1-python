@@ -25,11 +25,9 @@ print("Le temps de vol de", 3, "est", tempsVol(3))
 
 
 def tempsVolListe(n_max):
-    liste_temps_vol = [tempsVol(i) for i in range(1,n_max +1)]
-    return (liste_temps_vol)
+    return [tempsVol(i) for i in range(1,n_max +1)]
 
 print(tempsVolListe(100))
-
 
 
 l =tempsVolListe(10000)
