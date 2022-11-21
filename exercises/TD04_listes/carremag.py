@@ -1,5 +1,3 @@
-carre_mag=[[4,14,15,1],[9,7,6,12],[5,11,10,8],[16,2,3,13]]
-carre_pas_mag=[[4,14,15,1],[9,7,6,12],[5,11,10,8],[16,2,7,13]]
 
 def afficheCarre(carre):
     for i in carre:
@@ -59,6 +57,9 @@ def estNormal(carre):
     else:
         return False
 
+
+carre_mag=[[4,14,15,1],[9,7,6,12],[5,11,10,8],[16,2,3,13]]
+carre_pas_mag=[[4,14,15,1],[9,7,6,12],[5,11,10,8],[16,2,7,13]]
 
 print("affiche carré mag")
 afficheCarre(carre_mag)
