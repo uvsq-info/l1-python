@@ -65,7 +65,7 @@ afficheCarre(carre_mag)
 print("affiche carré pas mag")
 afficheCarre(carre_pas_mag)
 
-print("")
+print("----------------------------")
 
 print("carré mag lignes égales")
 print(testLignesEgales(carre_mag))
@@ -73,28 +73,28 @@ print("")
 print("carré pas mag lignes égales")
 print(testLignesEgales(carre_pas_mag))
 
-print("")
+print("----------------------------")
 
 print("carre mag colonnes egales")
 print(testColonnesEgales(carre_mag))
 print("carre pas mag colonne egales")
 print(testColonnesEgales(carre_pas_mag))
 
-print("")
+print("----------------------------")
 
 print("carre mag diagonales egales")
 print(testDiagonalesEgales(carre_mag))
 print("carre pas mag diagonales egales")
 print(testDiagonalesEgales(carre_pas_mag))
 
-print("")
+print("----------------------------")
 
 print("est carre mag")
 print(estCarreMagique(carre_mag))
 print("est carré pas mag")
 print(estCarreMagique(carre_pas_mag))
 
-print("")
+print("----------------------------")
 
 print("est normal carre mag")
 print(estNormal(carre_mag))
