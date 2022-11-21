@@ -25,12 +25,14 @@ def testColonnesEgales(carre):
 
 def testDiagonalesEgales(carre):
     """ Renvoie la somme des éléments d'une diagonale de la liste 2D carre si les 2 diagonales ont la même somme, et -1 sinon """
-    sum0 = carre[0][0] + carre[1][1] + carre[2][2] + carre[3][3]
-    sum1 = carre[0][3] + carre[1][2] + carre[2][1] + carre[3][0]
-    if sum0 == sum1:
-        return sum0
-    else:
+    taille = len(carre)
+    diag1 = [carre[i][i] for i in range(taille)]
+    diag2 = [carre[i][taille-i-1] for i in range(taille)]
+    somme = sum(diag1)
+    if sum(diag2) != somme:
         return -1
+    else:
+        return somme
 
 def estCarreMagique(carre):
     """ Renvoie True si c'est un carre magique et False sinon"""
@@ -59,7 +61,12 @@ def estNormal(carre):
 
 
 carre_mag=[[4,14,15,1],[9,7,6,12],[5,11,10,8],[16,2,3,13]]
-carre_pas_mag=[[4,14,15,1],[9,7,6,12],[5,11,10,8],[16,2,7,13]]
+carre_pas_mag = []
+for i in range(len(carre_mag)):
+    carre_pas_mag.append([])
+    for j in range(len(carre_mag[i])):
+        carre_pas_mag[i].append(carre_mag[i][j])
+carre_pas_mag[3][2] = 7
 
 print("affiche carré mag")
 afficheCarre(carre_mag)
