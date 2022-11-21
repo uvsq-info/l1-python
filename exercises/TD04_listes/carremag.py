@@ -44,21 +44,15 @@ def estCarreMagique(carre):
 def estNormal(carre):
     """ Retourne True si contient toutes les valeurs de 1 à n^2 où n est la taille 
         du carré, et False sinon """
-    n = len(carre)
-    s = 0
-    liste_triee = []
-    for a in range (0, 4):
-        for b in range (0, 4):
-            liste_triee.append(carre[a][b])
-    liste_triee.sort()
-    for x in range(1, n ** 2 + 1):
-        if x in liste_triee:
-            s += 1
-    if s == n**2:
-        return True
-    else:
-        return False
-
+    liste = []
+    for lignes in carre :
+        liste.extend(lignes)
+    taille = len(liste)
+    for entier in range(1,taille * taille +1):
+        if entier not in liste:
+            return False     
+    return True
+    
 
 carre_mag=[[4,14,15,1],[9,7,6,12],[5,11,10,8],[16,2,3,13]]
 carre_pas_mag = []
