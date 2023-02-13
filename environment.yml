@@ -2,7 +2,7 @@ name: l1-python
 channels:
   - defaults
 dependencies:
-  - flake8
+  - flake8==3.8.3
   - jupyter
   - matplotlib
   - mypy
