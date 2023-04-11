@@ -1,27 +1,33 @@
 import tkinter as tk
 
 # Fonction de chiffrement de César
-def encrypt_cesar(plaintext, shift):
+def encrypt_cesar():
+    plaintext = entry_text.get()
+    shift = int(entry_key.get())
     ciphertext = ''
     for letter in plaintext:
         if letter.isalpha():
             ciphertext += chr((ord(letter) + shift - 65) % 26 + 65)
         else:
             ciphertext += letter
-    return ciphertext
+    label_resultat.config(text=ciphertext)
 
 # Fonction de déchiffrement de César
-def decrypt_cesar(ciphertext, shift):
+def decrypt_cesar():
+    ciphertext = entry_text.get()
+    shift = int(entry_key.get())
     plaintext = ''
     for letter in ciphertext:
         if letter.isalpha():
             plaintext += chr((ord(letter) - shift - 65) % 26 + 65)
         else:
             plaintext += letter
-    return plaintext
+    label_resultat.config(text=plaintext)
 
 # Fonction de chiffrement de Vigenère
-def encrypt_vigenere(plaintext, keyword):
+def encrypt_vigenere():
+    plaintext = entry_text.get()
+    keyword = entry_key.get()
     ciphertext = ''
     keyword = keyword.upper()
     index = 0
@@ -32,10 +38,12 @@ def encrypt_vigenere(plaintext, keyword):
             index += 1
         else:
             ciphertext += letter
-    return ciphertext
+    label_resultat.config(text=ciphertext)
 
 # Fonction de déchiffrement de Vigenère
-def decrypt_vigenere(ciphertext, keyword):
+def decrypt_vigenere():
+    ciphertext = entry_text.get()
+    keyword = entry_key.get()
     plaintext = ''
     keyword = keyword.upper()
     index = 0
@@ -46,27 +54,29 @@ def decrypt_vigenere(ciphertext, keyword):
             index += 1
         else:
             plaintext += letter
-    return plaintext
+    label_resultat.config(text=plaintext)
 
 # Fonction de chiffrement de Scytale
-def encrypt_scytale(plaintext, key):
-    key = int(key)
+def encrypt_scytale():
+    plaintext = entry_text.get()
+    key = int(entry_key.get())
     ciphertext = [''] * key
     index = 0
     for letter in plaintext:
         ciphertext[index] += letter
         index = (index + 1) % key
-    return ''.join(ciphertext)
+    label_resultat.config(text=''.join(ciphertext))
 
 # Fonction de déchiffrement de Scytale
-def decrypt_scytale(ciphertext, key):
-    key = int(key)
+def decrypt_scytale():
+    ciphertext = entry_text.get()
+    key = int(entry_key.get())
     plaintext = [''] * len(ciphertext)
     index = 0
     for i in range(len(ciphertext)):
         plaintext[i] = ciphertext[index]
         index = (index + 1) % key
-    return ''.join(plaintext)
+    label_resultat.config(text=''.join(plaintext))
 
 def crypter_texte(texte, cle, methode):
     """
@@ -132,31 +142,52 @@ def crypter_texte(texte, cle, methode):
         return 'Méthode de chiffrement/déchiffrement invalide'
 
 def crypter():
-    texte = zone_texte.get('1.0', 'end-1c')  # Récupération du texte dans la zone de texte
-    cle = entree_cle.get()  # Récupération de la clé dans l'entrée de texte
+    texte = label_text.get('1.0', 'end-1c')  # Récupération du texte dans la zone de texte
+    cle = label_key.get()  # Récupération de la clé dans l'entrée de texte
     methode = var_methode.get()  # Récupération de la méthode choisie
     texte_crypte = crypter_texte(texte, cle, methode)  # Appel de la fonction de chiffrement/dé
 
 
+
 # Création de la fenêtre et du Canvas
 root = tk.Tk()
-canvas = tk.Canvas(root, width=500, height=500)
+canvas = tk.Canvas(root, width=600, height=600)
 canvas.pack()
 
-# Boutons pour les méthodes de chiffrement et de déchiffrement
+# Zone de texte pour le message à chiffrer/déchiffrer et pour la clé
+label_text = tk.Label(canvas, text="Message : ")
+label_text.place(x=50, y=400)
+entry_text = tk.Entry(canvas)
+entry_text.place(x=150, y=400)
+
+label_key = tk.Label(canvas, text="Clé : ")
+label_key.place(x=50, y=450)
+entry_key = tk.Entry(canvas)
+entry_key.place(x=150, y=450)
+
+# Création du label pour afficher le résultat
+label_resultat = tk.Label(canvas, text="")
+label_resultat.place(x=50, y=500)
+label_resultat.config(text="crypter")
+
+# Boutons
 button_cesar_chiffrement = tk.Button(canvas, text="Chiffrement de César", command=encrypt_cesar)
 button_cesar_dechiffrement = tk.Button(canvas, text="Déchiffrement de César", command=decrypt_cesar)
 button_vigenere_chiffrement = tk.Button(canvas, text="Chiffrement de Vigenère", command=encrypt_vigenere)
 button_vigenere_dechiffrement = tk.Button(canvas, text="Déchiffrement de Vigenère", command=decrypt_vigenere)
 button_scytale_chiffrement = tk.Button(canvas, text="Chiffrement de Scytale", command=encrypt_scytale)
 button_scytale_dechiffrement = tk.Button(canvas, text="Déchiffrement de Scytale", command=decrypt_scytale)
+button_crypter = tk.Button(canvas, text="Crypter", command=crypter)
+
 
 # Placement des boutons sur le Canvas
-button_cesar_chiffrement.place(x=50, y=50)
-button_cesar_dechiffrement.place(x=50, y=100)
-button_vigenere_chiffrement.place(x=50, y=150)
-button_vigenere_dechiffrement.place(x=50, y=200)
-button_scytale_chiffrement.place(x=50, y=250)
-button_scytale_dechiffrement.place(x=50, y=300)
+button_cesar_chiffrement.place(x=40, y=50)
+button_cesar_dechiffrement.place(x=40, y=100)
+button_vigenere_chiffrement.place(x=40, y=150)
+button_vigenere_dechiffrement.place(x=40, y=200)
+button_scytale_chiffrement.place(x=40, y=250)
+button_scytale_dechiffrement.place(x=40, y=300)
+button_crypter.place(x=40, y=350)
+
 
 root.mainloop()
