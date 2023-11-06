@@ -1,7 +1,6 @@
 #temps[0] : jours, temps[1]: heures, temps[2]: minutes, temps[3]: secondes
 
 def tempsEnSeconde(temps):
-    """ Renvoie la valeur en seconde de temps donné comme jour, heure, minute, seconde."""
     return temps[0]*86400 + temps[1]*3600 + temps[2]*60 + temps[3]*1
 
 
@@ -15,7 +14,7 @@ print(tempsEnSeconde(temps))
 #    pass
 
 def secondeEnTemps(seconde):
-    """Renvoie le temps (jour, heure, minute, seconde) qui correspond au nombre de seconde passé en argument"""
+    
     jour=seconde//(24*60*60)
     reste=seconde%(24*60*60)
     heure=reste//(60*60)
@@ -43,7 +42,7 @@ def afficheTemps(temps):
     pluriel("seconde",temps[3])
     print()
     
-#afficheTemps((1,0,14,23))
+
 
 def demandeTemps():
     jour1=int(input("donnez nombr de jours"))
@@ -61,9 +60,32 @@ def demandeTemps():
             seconde1=int(input("ce n'est pas correcte, donnez le nombre de secondes"))
     return((jour1,heure1,minute1,seconde1))
         
-afficheTemps(demandeTemps())
+#afficheTemps(demandeTemps())
 
 def sommeTemps(temps1,temps2):
-    return (tempsEnSeconde(temps1)+tempsEnSeconde(temps2))
+    return (secondeEnTemps(tempsEnSeconde(temps1)+tempsEnSeconde(temps2)))
+
+
 
 sommeTemps((2,3,4,25),(5,22,57,1))
+
+
+def proportionTemps(temps,proportion):
+    return secondeEnTemps(int(tempsEnSeconde(temps)*proportion))
+
+
+afficheTemps((proportionTemps((2,0,36,0),0.2)))
+
+def tempsEnDate(temps):
+    annee=1970+(temps[0]//365)
+    jour=temps[0]%365+1
+
+import time 
+def afficheDate(date):
+    if len(date)==0:
+        date= tempsEnDate(secondeEnTemps(int(time.time)))
+    print("jour",date[1],"de l'année",date[0],"à",str(date[2])+":"+str(date[3])+":"+str(date[4]))
+temps = secondeEnTemps(1000000000)
+afficheTemps(temps)
+afficheDate(tempsEnDate(temps))
+afficheDate()
