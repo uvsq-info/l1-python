@@ -3,7 +3,7 @@
 def tempsEnSeconde(temps):
     """ Renvoie la valeur en seconde de temps donné comme jour, heure, minute, seconde."""
     return temps[0]*86400 + temps[1]*3600 + temps[2]*60 + temps[3]*1
-    pass
+
 
 temps = (3,23,1,34)
 print(type(temps))
@@ -26,3 +26,20 @@ def secondeEnTemps(seconde):
 
 temps = secondeEnTemps(100000)
 print(temps[0],"jours",temps[1],"heures",temps[2],"minutes",temps[3],"secondes")
+
+
+
+def pluriel(nombre,mot):
+    if int(nombre)>1:
+        return str(nombre) + (mot+"s",end="")
+    elif int(nombre)=1:
+        return str(nombre) + (mot,end="")
+    elif int(nombre)=0:
+        return None
+
+    
+def afficheTemps(temps):
+    return ((pluriel(temps[0],jour)),(pluriel(temps[1],heure)),(pluriel(temps[2],minute)),(pluriel(temps[3],seconde)))
+    
+    
+print(afficheTemps((1,0,14,23)))
