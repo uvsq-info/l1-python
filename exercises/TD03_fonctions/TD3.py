@@ -29,17 +29,41 @@ print(temps[0],"jours",temps[1],"heures",temps[2],"minutes",temps[3],"secondes")
 
 
 
-def pluriel(nombre,mot):
-    if int(nombre)>1:
-        return str(nombre) + (mot+"s",end="")
-    elif int(nombre)=1:
-        return str(nombre) + (mot,end="")
-    elif int(nombre)=0:
-        return None
+def pluriel(mot,nombre):
+    if nombre>0:
+        print(" ",nombre,mot,end="")
+    if nombre>1:
+        print("s",end="")
 
     
 def afficheTemps(temps):
-    return ((pluriel(temps[0],jour)),(pluriel(temps[1],heure)),(pluriel(temps[2],minute)),(pluriel(temps[3],seconde)))
+    pluriel("jour",temps[0])
+    pluriel("heure",temps[1])
+    pluriel("minute",temps[2])
+    pluriel("seconde",temps[3])
+    print()
     
-    
-print(afficheTemps((1,0,14,23)))
+#afficheTemps((1,0,14,23))
+
+def demandeTemps():
+    jour1=int(input("donnez nombr de jours"))
+    heure1=int(input("donnez nombre d'heures"))
+    minute1=int(input("donnez nombre de minutes"))
+    seconde1=int(input("donnez nombre de secondes"))
+    if heure1>=24:
+        while heure1>=24:
+            heure1=int(input("ce n'est pas correcte, donne le nombre d'heures"))
+    if minute1>=60:
+        while minute1>=60:
+            minute1=int(input("ce n'est pas correcte, donne nombre de minutes"))
+    if seconde1>=60:
+        while seconde1>=60:
+            seconde1=int(input("ce n'est pas correcte, donnez le nombre de secondes"))
+    return((jour1,heure1,minute1,seconde1))
+        
+afficheTemps(demandeTemps())
+
+def sommeTemps(temps1,temps2):
+    return (tempsEnSeconde(temps1)+tempsEnSeconde(temps2))
+
+sommeTemps((2,3,4,25),(5,22,57,1))
