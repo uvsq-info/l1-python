@@ -67,25 +67,71 @@ def sommeTemps(temps1,temps2):
 
 
 
-sommeTemps((2,3,4,25),(5,22,57,1))
+#sommeTemps((2,3,4,25),(5,22,57,1))
 
 
 def proportionTemps(temps,proportion):
     return secondeEnTemps(int(tempsEnSeconde(temps)*proportion))
 
 
-afficheTemps((proportionTemps((2,0,36,0),0.2)))
+#afficheTemps((proportionTemps((2,0,36,0),0.2)))
 
 def tempsEnDate(temps):
     annee=1970+(temps[0]//365)
     jour=temps[0]%365+1
+    heure=temps[1]
+    minute=temps[2]
+    seconde=temps[3]
+    return (annee,jour,heure,minute,seconde)
+    
 
 import time 
+
 def afficheDate(date):
     if len(date)==0:
         date= tempsEnDate(secondeEnTemps(int(time.time)))
     print("jour",date[1],"de l'année",date[0],"à",str(date[2])+":"+str(date[3])+":"+str(date[4]))
+#temps = secondeEnTemps(1000000000)
+#afficheTemps(temps)
+#afficheDate(tempsEnDate(temps))
+#afficheDate()   
+
+
+def an_bissextile(annee):
+    return annee%4==0 and (annee%100!=0 or annee%400==0)
+
+def bisextile(jour):
+    annee=1970
+    while jour>=365:
+        if an_bissextile(annee):
+            print("l'année"+str(annee)+"est bisextile")
+            jour-=366
+        else:
+            jour-=365
+        annee+=1
+
+def nombrebisextile(jour):
+    count=0
+    annee=1970
+    while jour>=365:
+        if an_bissextile(annee):
+            print("l'année"+str(annee)+"est bisextile")
+            jour-=366
+            count+=1
+        else:
+            jour-=365
+        annee+=1
+    return count
+#bisextile(20000)
+
+def tempsEnDateBisextile(temps):
+    jours,heures,minutes,secondes=temps
+    jours=jours-nombrebisextile(jours)
+    tempsbis=(jours,heures,minutes,secondes)
+    return tempsEnDate(tempsbis)
+   
 temps = secondeEnTemps(1000000000)
 afficheTemps(temps)
-afficheDate(tempsEnDate(temps))
-afficheDate()   
+afficheDate(tempsEnDateBisextile(secondeEnTemps(int(time.time()))))
+
+
