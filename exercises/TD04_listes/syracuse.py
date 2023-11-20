@@ -100,3 +100,13 @@ def TestDiagonalEgales(carre):
     
 def est_carre_mag(carre):
     return test_ligneEgale(carre)==testColonnesEgales(carre)and test_ligneEgale(carre)==TestDiagonalEgales(carre) and testLignesEgales(carre)!=-1
+
+def Est_normal(carre):
+    Liste=[]
+    for ligne in carre:
+        Liste.extend(ligne)
+    taille=len(carre)
+    for entier in range (1,taille*taille+1)
+    if entier not in Liste:
+        return False
+    return True
